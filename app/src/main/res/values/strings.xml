@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NiceOSAndroid</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="city_name">Plz input the city name</string>
+    <string name="jdbaike">煎蛋是一个团队博客，程序基于wordpress平台。职能是"以译介方式传播境外新鲜资讯"。自2006年10月12日上线以来倍受好评，成为中文 Geek 们的集中地，以高频度的持续更新和有趣的内容而获得数千万读者的支持。成立以来总浏览量数亿，订阅用户逾二百万。\n
+    “煎蛋”译介传播网络新鲜资讯，以翻译各个境外网站上出现的有趣的新闻以及传闻为主要内容。主站以编辑从Digg等国外资讯网站上翻译的文章为主；妹子图、无聊图、GIF版由网友从9gag等图片站搬运的图片构成（为了防止反盗链导致图片无法显示，目前无聊图仅支持粘贴来自新浪的图片）；发霉啦是吐槽FML遭遇的聚集地。\n
+    </string>
+    <string name="jdzf">
+        *****************************\n
+          凑字数的分割线之煎蛋做法\n
+        ******************************\n
+        第一步，在平底锅或者炒勺里放入较多油，特别是炒勺多放点。\n
+        第二步，待油七八成熟，就是有点冒烟的时候，打开鸡蛋直接放入平底锅或者炒勺中。\n
+        第三步，注意火不要太大，那样蛋容易煎糊，注意看一面煎黄，用铲子反过来煎另一面。\n
+        第四步，用铲子取出煎蛋，关火！\n
+        煎蛋最忌讳大火急火，那样不仅容易糊，而且容易外面糊了，里面没熟！\n
+    </string>
+</resources>
