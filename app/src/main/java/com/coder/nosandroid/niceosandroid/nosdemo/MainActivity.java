@@ -13,9 +13,9 @@ import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.hellochart.HelloChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
+import com.coder.nosandroid.niceosandroid.picturewall.PictureWallActivity;
 import com.coder.nosandroid.niceosandroid.pm25volley.PM25Activity;
 import com.coder.nosandroid.niceosandroid.slipindexdemo.SlipIndicatorActivity;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("ObserViewDemo");
+        setTitle("NiceOSAndroidDemo");
 
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         objects.add(new ContentItem("ObserviewDemo","A demostration of Observable Scrollview."));
         objects.add(new ContentItem("HelloChartsDemo","A demostration of Dynamic line chart with helloCharts."));
         objects.add(new ContentItem("MpChartsDemo","A demostration of Dynamic line chart with MPAndroidCharts."));
+        objects.add(new ContentItem("PictureWallDemo","A demostration of WallPicture with LruCache and AsyncTask."));
 
         MainAdapter adapter = new MainAdapter(this,objects);
         ListView lv = (ListView) findViewById(R.id.listView);
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 4 :
                 intent = new Intent(this,MPChartActivity.class);
+                startActivity(intent);
+                break;
+            case 5 :
+                intent = new Intent(this,PictureWallActivity.class);
                 startActivity(intent);
                 break;
 

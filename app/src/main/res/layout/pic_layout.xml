@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    >
+
+    <ImageView
+        android:id="@+id/photo"
+        android:background="@drawable/android:picture_frame"
+        android:layout_width="100dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        />
+
+</RelativeLayout>  
