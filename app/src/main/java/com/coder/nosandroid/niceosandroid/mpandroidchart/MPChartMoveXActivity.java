@@ -1,6 +1,9 @@
 package com.coder.nosandroid.niceosandroid.mpandroidchart;
 
-import android.app.Activity;
+/**
+ * Created by saberhao on 2016/1/19.
+ */
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import android.widget.Switch;
 
 import com.coder.nosandroid.niceosandroid.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -27,10 +29,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by saberhao on 2016/1/18.
  */
-public class MPChartActivity extends AppCompatActivity implements OnChartGestureListener,OnChartValueSelectedListener {
+public class MPChartMoveXActivity extends AppCompatActivity implements OnChartGestureListener,OnChartValueSelectedListener {
 
     private LineChart mChart;
 
@@ -42,10 +45,12 @@ public class MPChartActivity extends AppCompatActivity implements OnChartGesture
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mpandroidchart);
-        setTitle("MPChartDemo");
+        setTitle("MPChartMoveXDemo");
         initLineChart();
-        //Show lineChart with all entriew visible
-        showLineChart();
+        //Show lineChart with 20 set visible
+        showPartVisibleLineChart();
+
+
     }
 
     private void showPartVisibleLineChart() {
@@ -285,3 +290,4 @@ public class MPChartActivity extends AppCompatActivity implements OnChartGesture
 
     }
 }
+

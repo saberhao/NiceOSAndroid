@@ -25,6 +25,8 @@
             android:screenOrientation="landscape">
         </activity>
         <activity android:name=".mpandroidchart.MPChartActivity"></activity>
+        <activity android:name=".mpandroidchart.MPChartMoveXActivity"></activity>
+        <activity android:name=".drawableLayoutdemo.DrawableActivity"></activity>
         <activity android:name=".picturewall.PictureWallActivity"></activity>
         <activity android:name=".picturewall.PictureDetailActivity"></activity>
 

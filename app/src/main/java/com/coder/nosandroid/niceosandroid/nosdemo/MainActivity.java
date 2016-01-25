@@ -1,6 +1,7 @@
 package com.coder.nosandroid.niceosandroid.nosdemo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.coder.nosandroid.niceosandroid.R;
+import com.coder.nosandroid.niceosandroid.drawableLayoutdemo.DrawableActivity;
 import com.coder.nosandroid.niceosandroid.hellochart.HelloChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
+import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartMoveXActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
 import com.coder.nosandroid.niceosandroid.picturewall.PictureWallActivity;
 import com.coder.nosandroid.niceosandroid.pm25volley.PM25Activity;
@@ -33,7 +36,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         objects.add(new ContentItem("SlipIndicatorDemo","A demostration of slip Indicator with CircleIndicator."));
         objects.add(new ContentItem("ObserviewDemo","A demostration of Observable Scrollview."));
         objects.add(new ContentItem("HelloChartsDemo","A demostration of Dynamic line chart with helloCharts."));
-        objects.add(new ContentItem("MpChartsDemo","A demostration of Dynamic line chart with MPAndroidCharts."));
+        objects.add(new ContentItem("MPChartsDemo","A demostration of Dynamic line chart with MPAndroidCharts."));
+        objects.add(new ContentItem("MPChartsMoveXDemo","A demostration of Dynamic line and Move-X chart with MPAndroidCharts."));
+        objects.add(new ContentItem("DrawableDemo","A demostration of Material Design of ViewPager with Materialmenu and Palette."));
         objects.add(new ContentItem("PictureWallDemo","A demostration of WallPicture with LruCache and AsyncTask."));
 
         MainAdapter adapter = new MainAdapter(this,objects);
@@ -45,23 +50,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        Intent i = null;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.viewGithub:
+                i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://github.com/saberhao/NiceOSAndroid"));
+                startActivity(i);
+                break;
+            case R.id.blog:
+                i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://blog.csdn.net/saberhao"));
+                startActivity(i);
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     @Override
@@ -91,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
                 break;
             case 5 :
+                intent = new Intent(this, MPChartMoveXActivity.class);
+                startActivity(intent);
+                break;
+            case 6 :
+                intent = new Intent(this, DrawableActivity.class);
+                startActivity(intent);
+                break;
+            case 7 :
                 intent = new Intent(this,PictureWallActivity.class);
                 startActivity(intent);
                 break;
