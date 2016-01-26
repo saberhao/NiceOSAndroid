@@ -11,7 +11,7 @@ public class LogUtils {
     public static final int INFO = 3;
     public static final int WARN =4;
     public static final int ERROR = 5;
-    public static final int NOTHING =6; // when the level is NOTHING , there are no logs show
+    public static final int NOTHING =6; // when the level is NOTHING , there are no logs show.
     public static final int LEVEL = VERBOSE;
 
     public static void v (String tag, String funcName, String msg) {
