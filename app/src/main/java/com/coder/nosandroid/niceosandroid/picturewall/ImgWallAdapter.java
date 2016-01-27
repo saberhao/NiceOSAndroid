@@ -1,4 +1,4 @@
-package com.coder.nosandroid.niceosandroid.adapter;
+package com.coder.nosandroid.niceosandroid.picturewall;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;

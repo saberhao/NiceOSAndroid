@@ -6,40 +6,35 @@ import android.util.Log;
  * Created by saberhao on 2016/1/25.
  */
 public class LogUtils {
-    public static final int VERBOSE = 1;
-    public static final int DEBUG = 2;
-    public static final int INFO = 3;
-    public static final int WARN =4;
-    public static final int ERROR = 5;
-    public static final int NOTHING =6; // when the level is NOTHING , there are no logs show.
-    public static final int LEVEL = VERBOSE;
+
+    public static final int LEVEL = DebugType.VERBOSE.ordinal();
 
     public static void v (String tag, String funcName, String msg) {
-        if( LEVEL <= VERBOSE) {
+        if( LEVEL <= DebugType.VERBOSE.ordinal()) {
             Log.v(tag, getMsg(funcName, msg));
         }
     }
 
     public static void d (String tag, String funcName, String msg) {
-        if( LEVEL <= DEBUG) {
+        if( LEVEL <= DebugType.DEBUG.ordinal()) {
             Log.d(tag, getMsg(funcName, msg));
         }
     }
 
     public static void i (String tag, String funcName, String msg) {
-        if( LEVEL <= INFO) {
+        if( LEVEL <= DebugType.INFO.ordinal()) {
             Log.i(tag, getMsg(funcName, msg));
         }
     }
 
     public static void w (String tag, String funcName, String msg) {
-        if( LEVEL <= WARN) {
+        if( LEVEL <= DebugType.WARN.ordinal()) {
             Log.w(tag, getMsg(funcName, msg));
         }
     }
 
     public static void e (String tag, String funcName, String msg) {
-        if( LEVEL <= ERROR) {
+        if( LEVEL <= DebugType.ERROR.ordinal()) {
             Log.e(tag, getMsg(funcName, msg));
         }
     }
@@ -50,4 +45,12 @@ public class LogUtils {
         return ("[" + funcName + "]" + msg);
     }
 
+    public enum DebugType {
+        VERBOSE,
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR,
+        NOTHING
+    }
 }

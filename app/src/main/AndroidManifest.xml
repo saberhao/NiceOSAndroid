@@ -18,17 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pm25volley.PM25Activity"></activity>
-        <activity android:name=".slipindexdemo.SlipIndicatorActivity"></activity>
-        <activity android:name=".observiewdemo.ObserViewActivity"></activity>
+        <activity android:name=".pm25volley.PM25Activity"/>
+        <activity android:name=".slipindexdemo.SlipIndicatorActivity"/>
+        <activity android:name=".observiewdemo.ObserViewActivity"/>
         <activity android:name=".hellochart.HelloChartActivity"
             android:screenOrientation="landscape">
         </activity>
-        <activity android:name=".mpandroidchart.MPChartActivity"></activity>
-        <activity android:name=".mpandroidchart.MPChartMoveXActivity"></activity>
-        <activity android:name=".drawableLayoutdemo.DrawableActivity"></activity>
-        <activity android:name=".picturewall.PictureWallActivity"></activity>
-        <activity android:name=".picturewall.PictureDetailActivity"></activity>
+        <activity android:name=".mpandroidchart.MPChartActivity"/>
+        <activity android:name=".mpandroidchart.MPChartMoveXActivity"/>
+        <activity android:name=".drawableLayoutdemo.DrawableActivity"/>
+        <activity android:name=".picturewall.PictureWallActivity"/>
+        <activity android:name=".picturewall.PictureDetailActivity"/>
+        <activity android:name=".hwtestdemo.HWTestDemo"/>
+        <activity android:name=".hwtestdemo.HWTestDetail"/>
 
     </application>
 

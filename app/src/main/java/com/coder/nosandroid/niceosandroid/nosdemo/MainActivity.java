@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.drawableLayoutdemo.DrawableActivity;
 import com.coder.nosandroid.niceosandroid.hellochart.HelloChartActivity;
+import com.coder.nosandroid.niceosandroid.hwtestdemo.HWTestDemo;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartMoveXActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         objects.add(new ContentItem("MPChartsMoveXDemo","A demostration of Dynamic line and Move-X chart with MPAndroidCharts."));
         objects.add(new ContentItem("DrawableDemo","A demostration of Material Design of ViewPager with Materialmenu and Palette."));
         objects.add(new ContentItem("PictureWallDemo","A demostration of WallPicture with LruCache and AsyncTask."));
+        objects.add(new ContentItem("HWTestDemo","A demostration of Harewall test with Hw Manager"));
 
         MainAdapter adapter = new MainAdapter(this,objects);
         ListView lv = (ListView) findViewById(R.id.listView);
@@ -111,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 7 :
                 intent = new Intent(this,PictureWallActivity.class);
+                startActivity(intent);
+                break;
+            case 8 :
+                intent = new Intent(this,HWTestDemo.class);
                 startActivity(intent);
                 break;
 
