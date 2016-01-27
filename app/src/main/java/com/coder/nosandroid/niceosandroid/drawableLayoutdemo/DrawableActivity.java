@@ -22,7 +22,6 @@ import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuIcon;
 import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.Utilities.BitmapUtil;
-import com.coder.nosandroid.niceosandroid.fragment.drawableFragment;
 
 /**
  * Created by saberhao on 2016/1/19.

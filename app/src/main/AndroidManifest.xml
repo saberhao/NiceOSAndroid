@@ -29,6 +29,8 @@
         <activity android:name=".drawableLayoutdemo.DrawableActivity"></activity>
         <activity android:name=".picturewall.PictureWallActivity"></activity>
         <activity android:name=".picturewall.PictureDetailActivity"></activity>
+        <activity android:name=".hwtestdemo.HWTestDemo"></activity>
+        <activity android:name=".hwtestdemo.HWTestDetail"></activity>
 
     </application>
 

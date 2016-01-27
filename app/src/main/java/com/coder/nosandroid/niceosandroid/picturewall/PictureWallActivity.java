@@ -3,7 +3,6 @@ package com.coder.nosandroid.niceosandroid.picturewall;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -12,7 +11,6 @@ import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.Utilities.ImageDataSet;
 import com.coder.nosandroid.niceosandroid.Utilities.ImgInfo;
 import com.coder.nosandroid.niceosandroid.Utilities.LocalImgSet;
-import com.coder.nosandroid.niceosandroid.adapter.ImgWallAdapter;
 
 /**
  * Created by saberhao on 2016/1/23.

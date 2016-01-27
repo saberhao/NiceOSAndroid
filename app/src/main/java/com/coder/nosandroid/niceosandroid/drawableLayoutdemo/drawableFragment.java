@@ -1,4 +1,4 @@
-package com.coder.nosandroid.niceosandroid.fragment;
+package com.coder.nosandroid.niceosandroid.drawableLayoutdemo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
