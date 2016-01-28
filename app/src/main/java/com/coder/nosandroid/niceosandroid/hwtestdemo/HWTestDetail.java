@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.coder.nosandroid.niceosandroid.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saberhao on 2016/1/27.
@@ -26,12 +27,17 @@ public class HWTestDetail extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hwtestdetail);
         setTitle("HWTestDemo");
+        mItemTypeList = new ArrayList<>();
+        mFailItemList = new ArrayList<>();
+        mPassItemList = new ArrayList<>();
+
         mItemTv = (TextView)findViewById(R.id.result_item);
         initTestItem();
         mCirclePBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
         mCirclePBar.setColor(R.color.teal);
         mTestItemMaxSize = mItemTypeList.size();
         mCirclePBar.setMax(mTestItemMaxSize);
+
 
     }
 
