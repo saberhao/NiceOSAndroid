@@ -77,7 +77,7 @@ public class HWTestDetail extends AppCompatActivity{
         protected void onPostExecute(Boolean isPass) {
             super.onPostExecute(isPass);
             mTestResultTv.setText((isPass ? R.string.test_pass : R.string.test_fail));
-            if(true == isPass) {
+            if(isPass) {
                 mPassItemList.add(mCurrentTest);
             } else {
                 mFailItemList.add(mCurrentTest);
