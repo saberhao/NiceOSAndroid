@@ -11,16 +11,16 @@
         android:layout_marginTop="100dp">
         <com.coder.nosandroid.niceosandroid.hwtestdemo.CircleProgressBar
             android:id="@+id/custom_progressBar"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
             android:layout_gravity="center_horizontal"
-            app:progressBarThickness="25dp"/>
+            app:progressBarThickness="23dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/test_item"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="150dp"
             android:text="测试项目"
             android:textSize="25dp"/>
     </FrameLayout>
