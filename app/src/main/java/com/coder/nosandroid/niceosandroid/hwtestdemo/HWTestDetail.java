@@ -1,6 +1,11 @@
 package com.coder.nosandroid.niceosandroid.hwtestdemo;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,7 +13,10 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -38,6 +46,11 @@ public class HWTestDetail extends AppCompatActivity{
     private static final String TAG = "HWTestDetail";
     private SensorManager sm;
     private Boolean isSensorUpdate = false;
+    private BroadcastReceiver mBroadcastReceiver;
+    private Boolean isTestPass;
+    private Boolean isBTAutoEnable;
+    private Boolean isWLANAutoEnable;
+    private Boolean mStateChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +115,17 @@ public class HWTestDetail extends AppCompatActivity{
                     publishProgress(HWTestType.MAGNETIC);
                     mItemTestResult = MagnaticCheck();
                     break;
+                case BATTAERY:
+                    publishProgress(HWTestType.BATTAERY);
+                    mItemTestResult = BatteryCheck();
+                    break;
+                case BT:
+                    publishProgress(HWTestType.BT);
+                    mItemTestResult = BTCheck();
+                    break;
+                case WLAN:
+                    publishProgress(HWTestType.WLAN);
+                    mItemTestResult = CheckWlan();
             }
             return mItemTestResult;
         }
@@ -130,6 +154,15 @@ public class HWTestDetail extends AppCompatActivity{
                 case MAGNETIC:
                     mTestItemTv.setText(R.string.item_magnetic);
                     break;
+                case BATTAERY:
+                    mTestItemTv.setText(R.string.item_battary);
+                    break;
+                case BT:
+                    mTestItemTv.setText(R.string.item_bt);
+                    break;
+                case WLAN:
+                    mTestItemTv.setText(R.string.item_wlan);
+
 
             }
         }
@@ -284,7 +317,7 @@ public class HWTestDetail extends AppCompatActivity{
         isSensorUpdate = false;
         Sensor mMagnaticSensor = sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         AllSensorEventListener mSensorEventListener = new AllSensorEventListener();
-        sm.registerListener(mSensorEventListener,mMagnaticSensor,SensorManager.SENSOR_DELAY_UI);
+        sm.registerListener(mSensorEventListener, mMagnaticSensor, SensorManager.SENSOR_DELAY_UI);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -321,6 +354,171 @@ public class HWTestDetail extends AppCompatActivity{
 
         }
     }
+
+    private boolean BatteryCheck() {
+        LogUtils.d(TAG,"BatteryCheck","Battery Check Start");
+        isTestPass = false;
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                LogUtils.d(TAG,"BatteryCheck","onReceiver");
+                String action = intent.getAction();
+                if(action.equals(intent.ACTION_BATTERY_CHANGED)) {
+                    isTestPass = true;
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        this.registerReceiver(mBroadcastReceiver,filter);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            LogUtils.e(TAG,"BatteryCheck",e.getMessage());
+        }
+
+        this.unregisterReceiver(mBroadcastReceiver);
+        mBroadcastReceiver = null;
+
+        if(isTestPass) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private Boolean BTCheck() {
+        LogUtils.d(TAG,"BTCheck","Start BTCheck");
+        isTestPass = false;
+        isBTAutoEnable = false;
+        mStateChange = false;
+        BluetoothAdapter mBTAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                LogUtils.d(TAG,"BTCheck","onReceive");
+                String action = intent.getAction();
+                if(action.equals(BluetoothDevice.ACTION_FOUND)) {
+                    LogUtils.d(TAG,"BTCheck","BluetoothDevice.ACTION_FOUND");
+                    isTestPass = true;
+                } else if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                    LogUtils.d(TAG,"BTCheck","BluetoothAdapter.ACTION_STATE_CHANGED");
+                    mStateChange = true;
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        IntentFilter filter1 = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        this.registerReceiver(mBroadcastReceiver, filter);
+        this.registerReceiver(mBroadcastReceiver, filter1);
+        if(mBTAdapter == null) return false;
+        else if(!mBTAdapter.isEnabled()) {
+            LogUtils.d(TAG,"BTCheck","Enable BT");
+            mBTAdapter.enable(); // enable the BT device
+            isBTAutoEnable = true;
+            // To Avoid startDiscovery fail
+            try {
+                Thread.sleep(1600);
+            } catch (InterruptedException e) {
+                LogUtils.e(TAG,"BTCheck",e.getMessage());
+            }
+        }
+        // To Avoid startDiscovery fail and find device fail
+        while(!mStateChange) {
+            LogUtils.d(TAG,"BTCHECK","Checking the State Change");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                LogUtils.e(TAG,"BTCheck",e.getMessage());
+            }
+        }
+
+        // To find the BT Devices
+        if(!mBTAdapter.isDiscovering()) {
+            LogUtils.d(TAG, "BTCheck", "Start BT Discovering");
+            if(mBTAdapter.startDiscovery() == false) {
+                LogUtils.d(TAG,"BTCheck","Fail to BT Discovering");
+                this.unregisterReceiver(mBroadcastReceiver);
+                mBroadcastReceiver = null;
+                return false;
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            LogUtils.e(TAG,"BTCheck",e.getMessage());
+        }
+
+        unregisterReceiver(mBroadcastReceiver);
+        mBroadcastReceiver = null;
+
+        if(isBTAutoEnable) {
+            mBTAdapter.disable(); //关闭BT
+        }
+
+        if(isTestPass) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    Boolean CheckWlan() {
+        LogUtils.d(TAG,"CheckWlan()","CheckWlan Start");
+        ConnectivityManager mConnectivityManager = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        Boolean isWifiConnected = mNetworkInfo.isConnected();
+        isWLANAutoEnable = false;
+        isTestPass = false;
+        // check whether wifi connnect or not
+        if(isWifiConnected) {
+            LogUtils.d(TAG,"CheckWlan","Wifi Connected!");
+            return true;
+        }
+        WifiManager mWifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
+        if(null == mWifiManager) {
+            LogUtils.e(TAG,"CheckWlan","init WifiManager Fail");
+            return false;
+        }
+        if(!mWifiManager.isWifiEnabled()) {
+            mWifiManager.setWifiEnabled(true);
+            isWLANAutoEnable = true;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                LogUtils.e(TAG,"CheckWlan",e.getMessage());
+            }
+        }
+       mBroadcastReceiver = new BroadcastReceiver() {
+           @Override
+           public void onReceive(Context context, Intent intent) {
+               String action = intent.getAction();
+               if(action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+                   LogUtils.d(TAG,"WLANCHECK","Receive the wifi scan avaible action");
+                   isTestPass = true;
+               }
+           }
+       };
+        IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        this.registerReceiver(mBroadcastReceiver, filter);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            LogUtils.e(TAG,"WLANheck",e.getMessage());
+        }
+        if(isWLANAutoEnable) {
+            mWifiManager.setWifiEnabled(false);
+        }
+
+        unregisterReceiver(mBroadcastReceiver);
+        mBroadcastReceiver = null;
+
+        if(isTestPass) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     void initTestItem() {
         mItemTypeList.add(HWTestType.SPEAKER);
         mItemTypeList.add(HWTestType.VIBRATOR);
@@ -328,9 +526,9 @@ public class HWTestDetail extends AppCompatActivity{
         mItemTypeList.add(HWTestType.GYROSCOPE);
         mItemTypeList.add(HWTestType.PROXIMITY);
         mItemTypeList.add(HWTestType.MAGNETIC);
-//        mItemTypeList.add(HWTestType.WLAN);
-//        mItemTypeList.add(HWTestType.BT);
-//        mPassItemList.add(HWTestType.BATTAERY);
+        mItemTypeList.add(HWTestType.WLAN);
+        mItemTypeList.add(HWTestType.BT);
+        mItemTypeList.add(HWTestType.BATTAERY);
     }
     private enum HWTestType {
         SPEAKER,
@@ -339,9 +537,9 @@ public class HWTestDetail extends AppCompatActivity{
         GYROSCOPE,
         PROXIMITY,
         MAGNETIC,
-//        WLAN,
-//        BT,
-//        BATTAERY
+        WLAN,
+        BT,
+        BATTAERY
     }
 
 }

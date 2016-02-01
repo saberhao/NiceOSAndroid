@@ -36,6 +36,9 @@
     <string name="item_gyroscope">陀螺仪</string>
     <string name="item_proximity">距离传感器</string>
     <string name="item_magnetic">磁传感器</string>
+    <string name="item_battary">电池</string>
+    <string name="item_bt">蓝牙</string>
+    <string name="item_wlan">无线连接</string>
     <string name="test_pass">正常</string>
     <string name="test_fail">异常</string>
 </resources>
