@@ -36,8 +36,15 @@
         <activity android:name=".drawableLayoutdemo.DrawableActivity"></activity>
         <activity android:name=".picturewall.PictureWallActivity"></activity>
         <activity android:name=".picturewall.PictureDetailActivity"></activity>
-        <activity android:name=".hwtestdemo.HWTestDemo"></activity>
-        <activity android:name=".hwtestdemo.HWTestDetail"></activity>
+        <activity android:name=".hwtestdemo.HWTestDemo"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".hwtestdemo.HWTestDetail"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".hwtestdemo.HWTestResultList"
+            android:screenOrientation="portrait">
+        </activity>
 
     </application>
 

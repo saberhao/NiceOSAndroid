@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.Utilities.LogUtils;
@@ -51,6 +52,11 @@ public class HWTestDetail extends AppCompatActivity{
     private Boolean isBTAutoEnable;
     private Boolean isWLANAutoEnable;
     private Boolean mStateChange;
+    private HWTestWorkerTask task;
+    private AllSensorEventListener mSensorEventListener;
+    private Boolean isAllCompleted = false;
+    private MediaPlayer mMediaPlayer = null;
+    private BluetoothAdapter mBTAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,7 @@ public class HWTestDetail extends AppCompatActivity{
         mPassItemList = new ArrayList<>();
 
         sm = (SensorManager)getSystemService(SENSOR_SERVICE);
-        mTestResultTv = (TextView)findViewById(R.id.result_item);
+        mTestResultTv = (TextView) findViewById(R.id.result_item);
         mTestItemTv =(TextView)findViewById(R.id.test_item);
         initTestItem();
         mCirclePBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
@@ -71,7 +77,7 @@ public class HWTestDetail extends AppCompatActivity{
         mCirclePBar.setMax(mTestItemMaxSize);
         mCirclePBar.setProgress(0f);
         mCurrentTest = mItemTypeList.remove(0);
-        HWTestWorkerTask task = new HWTestWorkerTask();
+        task = new HWTestWorkerTask();
         task.execute(mCurrentTest);
 
     }
@@ -162,8 +168,6 @@ public class HWTestDetail extends AppCompatActivity{
                     break;
                 case WLAN:
                     mTestItemTv.setText(R.string.item_wlan);
-
-
             }
         }
 
@@ -181,8 +185,16 @@ public class HWTestDetail extends AppCompatActivity{
             if(mItemTypeList.size() > 0) {
                 mCurrentTest = mItemTypeList.remove(0);
                 LogUtils.d(TAG,"onPostExecute","mCurrentTest = " + mCurrentTest);
-                HWTestWorkerTask task = new HWTestWorkerTask();
+                task = new HWTestWorkerTask();
                 task.execute(mCurrentTest);
+            } else {
+                // Test Completed
+                LogUtils.d(TAG,"onPostExecute","Test Completed and show the result list");
+                isAllCompleted = true;
+                Intent intent = new Intent(HWTestDetail.this,HWTestResultList.class);
+                intent.putExtra("FailItemList",mFailItemList);
+                intent.putExtra("PassItemList",mPassItemList);
+                startActivity(intent);
             }
         }
 
@@ -195,8 +207,7 @@ public class HWTestDetail extends AppCompatActivity{
         int tempVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
         int maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         Uri mMuiscUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        MediaPlayer mMediaPlayer = MediaPlayer.create(this,mMuiscUri);
-        mMediaPlayer.setLooping(true);
+        mMediaPlayer = MediaPlayer.create(this,mMuiscUri);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (maxVolume * 0.3), 0);
         if (mMediaPlayer != null) {
             mMediaPlayer.start();
@@ -247,7 +258,7 @@ public class HWTestDetail extends AppCompatActivity{
         LogUtils.d(TAG,"GyroscopeCheck","Start GyroscopeCheck");
         Boolean testResult = false;
         Sensor mGyrSensor = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        AllSensorEventListener mSensorEventListener = new AllSensorEventListener();
+        mSensorEventListener = new AllSensorEventListener();
         sm.registerListener(mSensorEventListener, mGyrSensor, SensorManager.SENSOR_DELAY_UI);
         try {
             Thread.sleep(2000);
@@ -270,7 +281,7 @@ public class HWTestDetail extends AppCompatActivity{
         Boolean testResult = false;
         isSensorUpdate = false;
         Sensor mAccSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        AllSensorEventListener mSensorEventListener = new AllSensorEventListener();
+        mSensorEventListener = new AllSensorEventListener();
         sm.registerListener(mSensorEventListener,mAccSensor,SensorManager.SENSOR_DELAY_UI);
         try {
             Thread.sleep(2000);
@@ -293,7 +304,7 @@ public class HWTestDetail extends AppCompatActivity{
         Boolean testResult = false;
         isSensorUpdate = false;
         Sensor mProxSensor = sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        AllSensorEventListener mSensorEventListener = new AllSensorEventListener();
+        mSensorEventListener = new AllSensorEventListener();
         sm.registerListener(mSensorEventListener,mProxSensor,SensorManager.SENSOR_DELAY_UI);
         try {
             Thread.sleep(2000);
@@ -316,7 +327,7 @@ public class HWTestDetail extends AppCompatActivity{
         Boolean testResult = false;
         isSensorUpdate = false;
         Sensor mMagnaticSensor = sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        AllSensorEventListener mSensorEventListener = new AllSensorEventListener();
+        mSensorEventListener = new AllSensorEventListener();
         sm.registerListener(mSensorEventListener, mMagnaticSensor, SensorManager.SENSOR_DELAY_UI);
         try {
             Thread.sleep(2000);
@@ -361,7 +372,7 @@ public class HWTestDetail extends AppCompatActivity{
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                LogUtils.d(TAG,"BatteryCheck","onReceiver");
+                LogUtils.d(TAG,"BatteryCheck","onReceiver : "+intent.getAction());
                 String action = intent.getAction();
                 if(action.equals(intent.ACTION_BATTERY_CHANGED)) {
                     isTestPass = true;
@@ -391,7 +402,8 @@ public class HWTestDetail extends AppCompatActivity{
         isTestPass = false;
         isBTAutoEnable = false;
         mStateChange = false;
-        BluetoothAdapter mBTAdapter = BluetoothAdapter.getDefaultAdapter();
+        int testcnt = 0;
+        mBTAdapter = BluetoothAdapter.getDefaultAdapter();
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -415,21 +427,18 @@ public class HWTestDetail extends AppCompatActivity{
             LogUtils.d(TAG,"BTCheck","Enable BT");
             mBTAdapter.enable(); // enable the BT device
             isBTAutoEnable = true;
-            // To Avoid startDiscovery fail
-            try {
-                Thread.sleep(1600);
-            } catch (InterruptedException e) {
-                LogUtils.e(TAG,"BTCheck",e.getMessage());
-            }
         }
         // To Avoid startDiscovery fail and find device fail
-        while(!mStateChange) {
+        while(true) {
             LogUtils.d(TAG,"BTCHECK","Checking the State Change");
             try {
-                Thread.sleep(300);
+                Thread.sleep(600);
             } catch (InterruptedException e) {
                 LogUtils.e(TAG,"BTCheck",e.getMessage());
             }
+            testcnt++;
+            if(testcnt > 10) break;
+
         }
 
         // To find the BT Devices
@@ -450,10 +459,6 @@ public class HWTestDetail extends AppCompatActivity{
 
         unregisterReceiver(mBroadcastReceiver);
         mBroadcastReceiver = null;
-
-        if(isBTAutoEnable) {
-            mBTAdapter.disable(); //关闭BT
-        }
 
         if(isTestPass) {
             return true;
@@ -530,7 +535,7 @@ public class HWTestDetail extends AppCompatActivity{
         mItemTypeList.add(HWTestType.BT);
         mItemTypeList.add(HWTestType.BATTAERY);
     }
-    private enum HWTestType {
+    public enum HWTestType {
         SPEAKER,
         VIBRATOR,
         ACCELEROMETER,
@@ -542,4 +547,46 @@ public class HWTestDetail extends AppCompatActivity{
         BATTAERY
     }
 
+    @Override
+    protected void onDestroy() {
+
+        if(!isAllCompleted) {
+            Toast.makeText(this,R.string.cancel_test,Toast.LENGTH_SHORT).show();
+        }
+        if(task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+            task.cancel(true);
+        }
+
+        //close the BT device
+        if(isBTAutoEnable && (null != mBTAdapter)) {
+            mBTAdapter.disable(); //关闭BT
+        }
+
+        //cancel Speaker Check
+        if(null != mMediaPlayer) {
+            if(mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
+            }
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+
+        // cancel the all sensor test
+        try{
+            sm.unregisterListener(mSensorEventListener);
+            if(null != mBroadcastReceiver) {
+                this.unregisterReceiver(mBroadcastReceiver);
+                mBroadcastReceiver = null;
+            }
+        }catch (Exception e) {
+            LogUtils.e(TAG,"onDestroy",e.getMessage());
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

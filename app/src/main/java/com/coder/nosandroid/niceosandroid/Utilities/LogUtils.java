@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class LogUtils {
 
-    public static final int LEVEL = DebugType.VERBOSE.ordinal();
+    public static final int LEVEL = DebugType.NOTHING.ordinal();
 
     public static void v (String tag, String funcName, String msg) {
         if( LEVEL <= DebugType.VERBOSE.ordinal()) {
