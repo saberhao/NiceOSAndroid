@@ -18,6 +18,7 @@ public class HWTestDemo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hwtestdemo);
+        setTitle("HWTestDemo");
         Button mStartButton = (Button) findViewById(R.id.test_start);
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp">
-        <com.coder.nosandroid.niceosandroid.hwtestdemo.CircleProgressBar
+
+        <com.coder.nosandroid.niceosandroid.hwtestdemo.CircularProgressBar
             android:id="@+id/custom_progressBar"
             android:layout_width="320dp"
             android:layout_height="320dp"
             android:layout_gravity="center_horizontal"
-            app:progressBarThickness="23dp"/>
+            app:progressbar_width="23dp"
+            app:background_progressbar_width="23dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

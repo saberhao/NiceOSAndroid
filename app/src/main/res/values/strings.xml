@@ -25,9 +25,6 @@
         <item>秋天</item>
         <item>冬天</item>
     </string-array>
-    <string name="instro_text">
-        本测试将会进行各种硬件测试，包括声音，震动，WLan，蓝牙以及各类传感器测试。\n请注意，必须打开蓝牙以及Wlan，否则这两项测试结果将会失败
-    </string>
     <string name="start_test">开始测试</string>
     <string name="ongoing_test">测试中</string>
     <string name="item_speaker">扬声器</string>

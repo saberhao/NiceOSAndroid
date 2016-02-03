@@ -22,6 +22,7 @@ public class HWTestResultList extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("HWTestDemo");
         setContentView(R.layout.activity_hwtestresultlist);
         mAllItemList = new ArrayList<HWTestDetail.HWTestType>();
         mPassItemList = (ArrayList<HWTestDetail.HWTestType>)getIntent().getSerializableExtra("PassItemList");

@@ -15,6 +15,7 @@ import com.coder.nosandroid.niceosandroid.R;
 
 /**
  * Created by Mikhael LOPEZ on 16/10/2015.
+ * Update by saberhao on 3/2/2015
  */
 public class CircularProgressBar extends View {
 
@@ -30,6 +31,15 @@ public class CircularProgressBar extends View {
     private RectF rectF;
     private Paint backgroundPaint;
     private Paint foregroundPaint;
+    private int max = 100;
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
 
     //region Constructor & Init Method
     public CircularProgressBar(Context context, AttributeSet attrs) {
@@ -65,6 +75,7 @@ public class CircularProgressBar extends View {
         foregroundPaint.setColor(color);
         foregroundPaint.setStyle(Paint.Style.STROKE);
         foregroundPaint.setStrokeWidth(strokeWidth);
+        foregroundPaint.setStrokeCap(Paint.Cap.ROUND);
     }
     //endregion
 
@@ -73,7 +84,7 @@ public class CircularProgressBar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawOval(rectF, backgroundPaint);
-        float angle = 360 * progress / 100;
+        float angle = 360 * progress / max;
         canvas.drawArc(rectF, startAngle, angle, false, foregroundPaint);
     }
     //endregion
@@ -96,7 +107,7 @@ public class CircularProgressBar extends View {
     }
 
     public void setProgress(float progress) {
-        this.progress = (progress<=100) ? progress : 100;
+        this.progress = (progress<=max) ? progress : max;
         invalidate();
     }
 
@@ -143,6 +154,23 @@ public class CircularProgressBar extends View {
         invalidate();
         requestLayout();
     }
+
+    /**
+     * Transparent the given color by the factor
+     * The more the factor closer to zero the more the color gets transparent
+     *
+     * @param color  The color to transparent
+     * @param factor 1.0f to 0.0f
+     * @return int - A transplanted color
+     */
+    public int adjustAlpha(int color, float factor) {
+        int alpha = Math.round(Color.alpha(color) * factor);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
+    }
+
     //endregion
 
     //region Other Method

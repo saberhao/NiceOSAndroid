@@ -36,7 +36,7 @@ public class HWTestDetail extends AppCompatActivity{
 
     private TextView mTestResultTv;
     private TextView mTestItemTv;
-    private CircleProgressBar mCirclePBar;
+    private  CircularProgressBar mCirclePBar;
     private ArrayList<HWTestType> mItemTypeList;
     private ArrayList<HWTestType> mFailItemList;
     private ArrayList<HWTestType> mPassItemList;
@@ -71,8 +71,9 @@ public class HWTestDetail extends AppCompatActivity{
         mTestResultTv = (TextView) findViewById(R.id.result_item);
         mTestItemTv =(TextView)findViewById(R.id.test_item);
         initTestItem();
-        mCirclePBar = (CircleProgressBar)findViewById(R.id.custom_progressBar);
+        mCirclePBar = (CircularProgressBar)findViewById(R.id.custom_progressBar);
         mCirclePBar.setColor(R.color.teal);
+        mCirclePBar.setBackgroundColor(mCirclePBar.adjustAlpha(R.color.teal,0.3f));
         mTestItemMaxSize = mItemTypeList.size();
         mCirclePBar.setMax(mTestItemMaxSize);
         mCirclePBar.setProgress(0f);
@@ -524,6 +525,7 @@ public class HWTestDetail extends AppCompatActivity{
             return false;
         }
     }
+
     void initTestItem() {
         mItemTypeList.add(HWTestType.SPEAKER);
         mItemTypeList.add(HWTestType.VIBRATOR);
