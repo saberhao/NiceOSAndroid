@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
+        objects.add(new ContentItem("HWTestDemo","A demostration of HW test with Sensor Manager，MediaPlayer,AsyncTask"));
         objects.add(new ContentItem("PM25Demo","A demostration using Baidu API with Gson and volly."));
-        objects.add(new ContentItem("SlipIndicatorDemo","A demostration of slip Indicator with CircleIndicator."));
         objects.add(new ContentItem("ObserviewDemo","A demostration of Observable Scrollview."));
         objects.add(new ContentItem("HelloChartsDemo","A demostration of Dynamic line chart with helloCharts."));
         objects.add(new ContentItem("MPChartsDemo","A demostration of Dynamic line chart with MPAndroidCharts."));
         objects.add(new ContentItem("MPChartsMoveXDemo","A demostration of Dynamic line and Move-X chart with MPAndroidCharts."));
         objects.add(new ContentItem("DrawableDemo","A demostration of Material Design of ViewPager with Materialmenu and Palette."));
         objects.add(new ContentItem("PictureWallDemo","A demostration of WallPicture with LruCache and AsyncTask."));
-        objects.add(new ContentItem("HWTestDemo","A demostration of Harewall test with Hw Manager"));
+        objects.add(new ContentItem("SlipIndicatorDemo","A demostration of slip Indicator with CircleIndicator."));
 
         MainAdapter adapter = new MainAdapter(this,objects);
         ListView lv = (ListView) findViewById(R.id.listView);
@@ -84,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch (position) {
             case 0 :
-                intent = new Intent(this,PM25Activity.class);
+                intent = new Intent(this,HWTestDemo.class);
                 startActivity(intent);
                 break;
             case 1 :
-                intent = new Intent(this,SlipIndicatorActivity.class);
+                intent = new Intent(this,PM25Activity.class);
                 startActivity(intent);
                 break;
             case 2 :
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
                 break;
             case 8 :
-                intent = new Intent(this,HWTestDemo.class);
+                intent = new Intent(this,SlipIndicatorActivity.class);
                 startActivity(intent);
                 break;
 
