@@ -14,6 +14,7 @@ import android.support.v4.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -21,8 +22,9 @@ import android.widget.ImageView;
 import com.coder.nosandroid.niceosandroid.R;
 import com.coder.nosandroid.niceosandroid.Utilities.ImageDataSet;
 import com.coder.nosandroid.niceosandroid.Utilities.ImgInfo;
+import com.coder.nosandroid.niceosandroid.Utilities.LogUtils;
 
-public class ImgWallAdapter extends BaseAdapter{
+public class ImgWallAdapter extends BaseAdapter implements AbsListView.OnScrollListener {
 
     private Context context;
     private ImageDataSet<ImgInfo> imginfos;
@@ -31,6 +33,11 @@ public class ImgWallAdapter extends BaseAdapter{
     private LruCache<String, Bitmap> mMemoryCache;
     private GridView mImgWall;
     private Set<BitmapWorkerTask> taskCollection;
+    private boolean isScroll = false;
+    private boolean isFirstLoad = true;
+    private final String TAG = "ImgWallAdapter";
+    private int mFirstVisibleItem;
+    private int mVisibleItemCount;
 
 
 
@@ -49,6 +56,7 @@ public class ImgWallAdapter extends BaseAdapter{
                 return bitmap.getByteCount();
             }
         };
+        mImgWall.setOnScrollListener(this);
     }
 
     public int getCount() {
@@ -77,7 +85,6 @@ public class ImgWallAdapter extends BaseAdapter{
         }
         photo = (ImageView)view.findViewById(R.id.photo);
         photo.setTag(position);
-        loadBitmaps(position, photo);
         return view;
     }
 
@@ -135,6 +142,46 @@ public class ImgWallAdapter extends BaseAdapter{
     public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemoryCache(key) == null && bitmap != null) {
             mMemoryCache.put(key, bitmap);
+        }
+    }
+
+    private void cancelAllTasks() {
+        if (taskCollection != null) {
+            for (BitmapWorkerTask task : taskCollection) {
+                task.cancel(false);
+            }
+        }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        int position,visibleCnt;
+        if( scrollState == SCROLL_STATE_IDLE) {
+            LogUtils.d(TAG,"onScrollStateChanged","GridView is in idle,position is " + mFirstVisibleItem);
+            for(position = mFirstVisibleItem,visibleCnt = mVisibleItemCount; visibleCnt > 0; visibleCnt--,position++) {
+                ImageView photo = (ImageView) mImgWall.findViewWithTag(position);
+                loadBitmaps(position,photo);
+            }
+        } else {
+            LogUtils.d(TAG,"onScrollStateChanged","GridView is Scroll and cancel All Tasks");
+            cancelAllTasks();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int position;
+        int visibleCnt;
+        mFirstVisibleItem = firstVisibleItem;
+        mVisibleItemCount = visibleItemCount;
+
+        if(isFirstLoad) {
+            for(position = mFirstVisibleItem,visibleCnt = mVisibleItemCount; visibleCnt > 0; visibleCnt--,position++) {
+                ImageView photo = (ImageView) mImgWall.findViewWithTag(position);
+                loadBitmaps(position,photo);
+            }
+            if(mVisibleItemCount != 0)
+                isFirstLoad = false;
         }
     }
 
