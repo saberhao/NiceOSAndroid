@@ -58,7 +58,7 @@ public class PM25Activity extends AppCompatActivity implements View.OnClickListe
         mClrButton.setOnClickListener(this);
         mClrButton.setVisibility(View.GONE); //just for debug
         mEt = (AutoCompleteTextView)findViewById(R.id.et);
-//        initAutoComplete("pm25_history", mEt);
+        initAutoComplete("pm25_history", mEt);
         mTv = (TextView)findViewById(R.id.tv2);
         gson = new Gson();
         mheader = new HashMap<>();
