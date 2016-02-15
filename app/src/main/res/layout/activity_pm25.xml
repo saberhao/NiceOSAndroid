@@ -13,25 +13,41 @@
         android:textSize="22dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <EditText
-        android:layout_alignEnd="@+id/tv"
-        android:layout_alignRight="@+id/tv"
-        android:layout_below="@+id/tv"
-        android:id="@+id/et"
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
-    <Button
-        android:layout_below="@id/et"
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Get The PM2.5 Value" />
+        android:layout_below="@+id/tv"
+        android:orientation="horizontal">
+        <AutoCompleteTextView
+            android:id="@+id/et"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:hint="@string/cityname_guangzhou"
+            android:completionThreshold="1"
+            android:dropDownHeight="350dp"
+            android:completionHint=" Recent History"
+             />
+        <Button
+            android:id="@+id/btn"
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:text="Get The PM2.5 Value" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv2"
-        android:layout_below="@id/btn"
+        android:layout_below="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="27dp"/>
+    <Button
+        android:layout_below="@+id/tv2"
+        android:id="@+id/clearhistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear History"/>
 
 
 </RelativeLayout>

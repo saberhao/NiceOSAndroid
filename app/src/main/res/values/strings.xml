@@ -4,6 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_viewgithub"></string>
+    <string name="cityname_guangzhou">广州</string>
     <string name="action_viewblog">Settings</string>
     <string name="city_name">Plz input the city name</string>
     <string name="jdbaike">煎蛋是一个团队博客，程序基于wordpress平台。职能是"以译介方式传播境外新鲜资讯"。自2006年10月12日上线以来倍受好评，成为中文 Geek 们的集中地，以高频度的持续更新和有趣的内容而获得数千万读者的支持。成立以来总浏览量数亿，订阅用户逾二百万。\n
