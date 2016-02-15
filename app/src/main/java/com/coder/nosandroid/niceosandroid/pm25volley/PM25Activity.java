@@ -119,6 +119,7 @@ public class PM25Activity extends AppCompatActivity implements View.OnClickListe
             if (imm.isActive()) {
                 imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
             }
+            mEt.dismissDropDown();
         }
     }
     /**
