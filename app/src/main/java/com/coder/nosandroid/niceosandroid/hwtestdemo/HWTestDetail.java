@@ -49,14 +49,14 @@ public class HWTestDetail extends AppCompatActivity{
     private Boolean isSensorUpdate = false;
     private BroadcastReceiver mBroadcastReceiver;
     private Boolean isTestPass;
-    private Boolean isBTAutoEnable;
+    private Boolean isBTAutoEnable = false;
     private Boolean isWLANAutoEnable;
     private Boolean mStateChange;
     private HWTestWorkerTask task;
     private AllSensorEventListener mSensorEventListener;
     private Boolean isAllCompleted = false;
     private MediaPlayer mMediaPlayer = null;
-    private BluetoothAdapter mBTAdapter = null;
+    private BluetoothAdapter mBTAdapter = BluetoothAdapter.getDefaultAdapter();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -404,7 +404,6 @@ public class HWTestDetail extends AppCompatActivity{
         isBTAutoEnable = false;
         mStateChange = false;
         int testcnt = 0;
-        mBTAdapter = BluetoothAdapter.getDefaultAdapter();
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

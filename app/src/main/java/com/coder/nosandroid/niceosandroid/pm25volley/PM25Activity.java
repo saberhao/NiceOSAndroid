@@ -218,7 +218,7 @@ public class PM25Activity extends AppCompatActivity implements View.OnClickListe
         } ,new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mTv.setText("Plz Check Your NetWork Connect");
+                mTv.setText("the CityName or the Network Connect Error");
             }
         },mheader,AqiInfo.class);
 
