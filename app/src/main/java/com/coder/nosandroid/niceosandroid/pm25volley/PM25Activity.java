@@ -134,10 +134,10 @@ public class PM25Activity extends AppCompatActivity implements View.OnClickListe
                              String cityname) {
         String text = cityname;
         SharedPreferences sp = getSharedPreferences("network_url", 0);
-        String longhistory = sp.getString(field, "nothing");
+        String longhistory = sp.getString(field, mCleanHistory);
         if (!longhistory.contains(text + ",")) {
             StringBuilder sb = new StringBuilder(longhistory);
-            sb.insert(mCleanHistory.length(), text + ",");
+             sb.insert(mCleanHistory.length(), text + ",");
             sp.edit().putString("pm25_history", sb.toString()).commit();
         }
     }
