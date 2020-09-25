@@ -56,6 +56,4 @@ public class BitmapUtil {
         Drawable BDrawable = new BitmapDrawable(bitmap);
         return BDrawable;
     }
-
-
 }

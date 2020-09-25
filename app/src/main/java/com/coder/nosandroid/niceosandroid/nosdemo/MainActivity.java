@@ -2,8 +2,9 @@ package com.coder.nosandroid.niceosandroid.nosdemo;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +18,14 @@ import com.coder.nosandroid.niceosandroid.hwtestdemo.HWTestDemo;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartMoveXActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
-import com.coder.nosandroid.niceosandroid.picturewall.PictureWallActivity;
-import com.coder.nosandroid.niceosandroid.pm25volley.PM25Activity;
+import com.coder.nosandroid.niceosandroid.sampleCustomerView.CustomerViewActivity;
 import com.coder.nosandroid.niceosandroid.slipindexdemo.SlipIndicatorActivity;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +33,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         setTitle("NiceOSAndroidDemo");
 
-        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-
-        objects.add(new ContentItem("HWTestDemo","A demostration of HW test with Sensor Manager，MediaPlayer,AsyncTask"));
-        objects.add(new ContentItem("PM25Demo","A demostration using Baidu API with Gson and volly."));
-        objects.add(new ContentItem("ObserviewDemo","A demostration of Observable Scrollview."));
-        objects.add(new ContentItem("HelloChartsDemo","A demostration of Dynamic line chart with helloCharts."));
-        objects.add(new ContentItem("MPChartsDemo","A demostration of Dynamic line chart with MPAndroidCharts."));
-        objects.add(new ContentItem("MPChartsMoveXDemo","A demostration of Dynamic line and Move-X chart with MPAndroidCharts."));
-        objects.add(new ContentItem("DrawableDemo","A demostration of Material Design of ViewPager with Materialmenu and Palette."));
-        objects.add(new ContentItem("PictureWallDemo","A demostration of WallPicture with LruCache and AsyncTask."));
-        objects.add(new ContentItem("SlipIndicatorDemo","A demostration of slip Indicator with CircleIndicator."));
+        int id = 0;
+        objects.add(new ContentItem(id++, CustomerViewActivity.class, "自定义View","仪表盘，圆形进度条，富文本, 贝塞尔曲线等自定义图形."));
+        objects.add(new ContentItem(id++, HWTestDemo.class,"硬件检查","检查Sensor，MediaPlayer,Speaker, 蓝牙等硬件设备"));
+        objects.add(new ContentItem(id++, ObserViewActivity.class, "ObserviewDemo","A demo of Observable Scrollview."));
+        objects.add(new ContentItem(id++, HelloChartActivity.class, "HelloChartsDemo","A demo of Dynamic line chart with helloCharts."));
+        objects.add(new ContentItem(id++, MPChartActivity.class, "MPChartsDemo","A demo of Dynamic line chart with MPAndroidCharts."));
+        objects.add(new ContentItem(id++, MPChartMoveXActivity.class, "MPChartsMoveXDemo","A demo of Dynamic line and Move-X chart with MPAndroidCharts."));
+        objects.add(new ContentItem(id++, DrawableActivity.class, "DrawableDemo","A demo of Material Design of ViewPager with Materialmenu and Palette."));
+        //objects.add(new ContentItem(id++, PictureWallActivity.class, "PictureWallDemo","A demo of WallPicture with LruCache and AsyncTask."));
+        objects.add(new ContentItem(id++, SlipIndicatorActivity.class, "SlipIndicatorDemo","A demo of slip Indicator with CircleIndicator."));
+        //objects.add(new ContentItem(id++, PM25Activity.class, "PM25Demo","A demo using Baidu API with Gson and volly."));
 
         MainAdapter adapter = new MainAdapter(this,objects);
         ListView lv = (ListView) findViewById(R.id.listView);
@@ -80,48 +82,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Intent intent;
-
-        switch (position) {
-            case 0 :
-                intent = new Intent(this,HWTestDemo.class);
-                startActivity(intent);
-                break;
-            case 1 :
-                intent = new Intent(this,PM25Activity.class);
-                startActivity(intent);
-                break;
-            case 2 :
-                intent = new Intent(this,ObserViewActivity.class);
-                startActivity(intent);
-                break;
-            case 3 :
-                intent = new Intent(this,HelloChartActivity.class);
-                startActivity(intent);
-                break;
-            case 4 :
-                intent = new Intent(this,MPChartActivity.class);
-                startActivity(intent);
-                break;
-            case 5 :
-                intent = new Intent(this, MPChartMoveXActivity.class);
-                startActivity(intent);
-                break;
-            case 6 :
-                intent = new Intent(this, DrawableActivity.class);
-                startActivity(intent);
-                break;
-            case 7 :
-                intent = new Intent(this,PictureWallActivity.class);
-                startActivity(intent);
-                break;
-            case 8 :
-                intent = new Intent(this,SlipIndicatorActivity.class);
-                startActivity(intent);
-                break;
-
+        if (position >= objects.size()) {
+            return;
         }
-
+        Intent intent = new Intent(this, objects.get(position).cls);
+        startActivity(intent);
         overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
     }
 }

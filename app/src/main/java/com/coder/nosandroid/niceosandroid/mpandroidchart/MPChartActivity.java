@@ -1,15 +1,13 @@
 package com.coder.nosandroid.niceosandroid.mpandroidchart;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import android.widget.Switch;
 
 import com.coder.nosandroid.niceosandroid.R;
 import com.github.mikephil.charting.charts.LineChart;

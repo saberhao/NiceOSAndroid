@@ -20,7 +20,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -479,7 +479,7 @@ public class HWTestDetail extends AppCompatActivity{
             LogUtils.d(TAG,"CheckWlan","Wifi Connected!");
             return true;
         }
-        WifiManager mWifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
+        WifiManager mWifiManager = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
         if(null == mWifiManager) {
             LogUtils.e(TAG,"CheckWlan","init WifiManager Fail");
             return false;
