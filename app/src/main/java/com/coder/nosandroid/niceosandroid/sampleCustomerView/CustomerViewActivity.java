@@ -15,6 +15,8 @@ public class CustomerViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_view);
         setTitle("自定义View");
+
+
     }
 
 }

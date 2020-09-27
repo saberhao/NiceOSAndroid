@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +11,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.coder.nosandroid.niceosandroid.R;
+import com.coder.nosandroid.niceosandroid.animatorView.AnimatorViewActivity;
 import com.coder.nosandroid.niceosandroid.drawableLayoutdemo.DrawableActivity;
 import com.coder.nosandroid.niceosandroid.hellochart.HelloChartActivity;
 import com.coder.nosandroid.niceosandroid.hwtestdemo.HWTestDemo;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartMoveXActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
+import com.coder.nosandroid.niceosandroid.picturewall.PictureWallActivity;
+import com.coder.nosandroid.niceosandroid.pm25volley.PM25Activity;
 import com.coder.nosandroid.niceosandroid.sampleCustomerView.CustomerViewActivity;
 import com.coder.nosandroid.niceosandroid.slipindexdemo.SlipIndicatorActivity;
 
@@ -34,16 +36,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setTitle("NiceOSAndroidDemo");
 
         int id = 0;
-        objects.add(new ContentItem(id++, CustomerViewActivity.class, "自定义View","仪表盘，圆形进度条，富文本, 贝塞尔曲线等自定义图形."));
+        objects.add(new ContentItem(id++, AnimatorViewActivity.class, "动画View","属性动画应用."));
+        objects.add(new ContentItem(id++, CustomerViewActivity.class, "自定义View","Camera, 仪表盘，圆形进度条，富文本, 贝塞尔曲线等自定义图形."));
         objects.add(new ContentItem(id++, HWTestDemo.class,"硬件检查","检查Sensor，MediaPlayer,Speaker, 蓝牙等硬件设备"));
         objects.add(new ContentItem(id++, ObserViewActivity.class, "ObserviewDemo","A demo of Observable Scrollview."));
         objects.add(new ContentItem(id++, HelloChartActivity.class, "HelloChartsDemo","A demo of Dynamic line chart with helloCharts."));
         objects.add(new ContentItem(id++, MPChartActivity.class, "MPChartsDemo","A demo of Dynamic line chart with MPAndroidCharts."));
         objects.add(new ContentItem(id++, MPChartMoveXActivity.class, "MPChartsMoveXDemo","A demo of Dynamic line and Move-X chart with MPAndroidCharts."));
         objects.add(new ContentItem(id++, DrawableActivity.class, "DrawableDemo","A demo of Material Design of ViewPager with Materialmenu and Palette."));
-        //objects.add(new ContentItem(id++, PictureWallActivity.class, "PictureWallDemo","A demo of WallPicture with LruCache and AsyncTask."));
+        objects.add(new ContentItem(id++, PictureWallActivity.class, "PictureWallDemo","A demo of WallPicture with LruCache and AsyncTask."));
         objects.add(new ContentItem(id++, SlipIndicatorActivity.class, "SlipIndicatorDemo","A demo of slip Indicator with CircleIndicator."));
-        //objects.add(new ContentItem(id++, PM25Activity.class, "PM25Demo","A demo using Baidu API with Gson and volly."));
+        objects.add(new ContentItem(id++, PM25Activity.class, "PM25Demo","A demo using Baidu API with Gson and volly."));
 
         MainAdapter adapter = new MainAdapter(this,objects);
         ListView lv = (ListView) findViewById(R.id.listView);
