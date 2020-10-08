@@ -54,6 +54,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".animatorView.AnimatorViewActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".materialDesign.CollapsingActivity"
+            android:theme="@style/CollapsingActivityTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".multiTouch.MultiTouchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".materialDesign.SuspensionBarActivity"
+            android:theme="@style/AppCompatTheme"
+            android:screenOrientation="portrait"/>
 
     </application>
 

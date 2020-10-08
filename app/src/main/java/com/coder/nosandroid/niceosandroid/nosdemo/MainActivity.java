@@ -15,8 +15,11 @@ import com.coder.nosandroid.niceosandroid.animatorView.AnimatorViewActivity;
 import com.coder.nosandroid.niceosandroid.drawableLayoutdemo.DrawableActivity;
 import com.coder.nosandroid.niceosandroid.hellochart.HelloChartActivity;
 import com.coder.nosandroid.niceosandroid.hwtestdemo.HWTestDemo;
+import com.coder.nosandroid.niceosandroid.materialDesign.CollapsingActivity;
+import com.coder.nosandroid.niceosandroid.materialDesign.SuspensionBarActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartActivity;
 import com.coder.nosandroid.niceosandroid.mpandroidchart.MPChartMoveXActivity;
+import com.coder.nosandroid.niceosandroid.multiTouch.MultiTouchActivity;
 import com.coder.nosandroid.niceosandroid.observiewdemo.ObserViewActivity;
 import com.coder.nosandroid.niceosandroid.picturewall.PictureWallActivity;
 import com.coder.nosandroid.niceosandroid.pm25volley.PM25Activity;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setTitle("NiceOSAndroidDemo");
 
         int id = 0;
+        objects.add(new ContentItem(id++, SuspensionBarActivity.class, "悬浮条Demo", "悬浮条效果"));
+        objects.add(new ContentItem(id++, MultiTouchActivity.class, "多点触摸", "实现互不干扰, 竞争，接力三种形式的多点触摸"));
+        objects.add(new ContentItem(id++, CollapsingActivity.class, "折叠布局", "实现Material Design中的折叠布局"));
         objects.add(new ContentItem(id++, AnimatorViewActivity.class, "动画View","属性动画应用."));
         objects.add(new ContentItem(id++, CustomerViewActivity.class, "自定义View","Camera, 仪表盘，圆形进度条，富文本, 贝塞尔曲线等自定义图形."));
         objects.add(new ContentItem(id++, HWTestDemo.class,"硬件检查","检查Sensor，MediaPlayer,Speaker, 蓝牙等硬件设备"));

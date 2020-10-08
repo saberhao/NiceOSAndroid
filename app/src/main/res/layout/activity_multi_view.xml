@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:CircleIndicator="http://schemas.android.com/apk/res-auto">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
+
+    <pers.medusa.circleindicator.widget.CircleIndicator
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/indicator"
+        CircleIndicator:ci_background="@color/burlywood"
+        CircleIndicator:ci_selected_background="@color/blueviolet"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="150dp"
+        android:layout_marginBottom="70dp"
+        CircleIndicator:ci_mode="outside"
+        CircleIndicator:ci_gravity="center"
+        CircleIndicator:ci_radius="6dp"
+        CircleIndicator:ci_margin="4dp"
+        />
+
+</RelativeLayout>
